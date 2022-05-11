@@ -1,6 +1,10 @@
 //define global variables_____________________________________
-var timeLeft = 10;
+var timeLeft = 60;
+var stopTime = false;
 var questionNumber = 0;
+var score = 0;
+var loseTime = false;
+var timePenalty = 2;
 var quizAreaEl = $('.quiz-area');
 var timerEl = $('#timer');
 var scoreEl = $('#score');
@@ -43,12 +47,14 @@ var questionObjects = [
 ];
 
 //execute____________________________________________________
+//display score
+scoreEl.text(score);
+//display timer
 timerEl.text(timeLeft);
 //create high score array from local storage
 var scoreArray = JSON.parse(localStorage.getItem("highScores"));
 //check if array is empty and populate it with "empty" if it isnt
 if (!scoreArray) {
-    console.log('its empty');
     scoreArray = [
         'Empty',
         'Empty',
@@ -69,7 +75,7 @@ if (!scoreArray) {
 displayHighScores();
 
 
-//when start button is clicked
+//when start button is clicked execute this function
 startButtonEL.on('click', startButtonClick);
 
 
@@ -105,20 +111,25 @@ function startButtonClick(event) {
 //function for starting game
 function startGame() {
     startTimer();
-    askQuestion(0);
+    askQuestion(questionNumber);
 };
 
 // function to start timer
 function startTimer() {
-    timeLeft = 10;
+    timeLeft = 60;
     var timerInterval = setInterval(function() {
         timeLeft--;
         timerEl.text(timeLeft);
-        console.log(timeLeft);
-        
-        if(timeLeft === 0) {
+
+        //subtract time for wrong answer
+        if (loseTime === true) {
+            timeLeft = timeLeft - timePenalty;
+            loseTime = false;
+        }
+        //stop game if timer stops or runs out
+        if(timeLeft <= 0 || stopTime) {
             clearInterval(timerInterval);
-            gameOver();
+            gameOver(); 
         };
     }, 1000);
 };
@@ -135,19 +146,79 @@ function askQuestion(localValue) {
     questionEl.text('Question ' + localValue + ': ' + questionContent);
     //display new question
     quizAreaEl.append(questionEl);
-    //call function to display options
-    displayOptions();
+    displayOptions(questionNumber);
 };
 
 //function to present answers
-function displayOptions() {
-    console.log('possible answers displayed');
+function displayOptions(localValue) {
+    //get new question
+    var currentQuestion = questionObjects[localValue];
+    var clickedAnswer = '';
+    var clickedButton;
+    localValue++;
+    //define correct answer and array of possible answers
+    var correctAnswer = currentQuestion['answer'];
+    var allAnswers = [
+        correctAnswer, 
+        currentQuestion['wrongAnswer1'],
+        currentQuestion['wrongAnswer2'],
+        currentQuestion['wrongAnswer3']
+    ];
+    //randomize array
+    allAnswers = allAnswers.sort( ()=>Math.random()-0.5 );
+    //display all answers as buttons
+    for (i = 0; i < allAnswers.length; i++) {
+        var answerEl = $('<button>');
+        answerEl.text(allAnswers[i]);
+        quizAreaEl.append(answerEl);
+    }
+    // call function to check answer on click
+    $('button').click(function() {
+        clickedAnswer = $(this).text();
+        checkAnswer(correctAnswer, clickedAnswer);
+    });
+};
+
+//function to check the answer and populate answer area
+function checkAnswer(correct, clicked) {
+    var correctness = "";
+    //check for correct answer
+    if (correct === clicked) {
+        score++;
+        scoreEl.text(score);
+        correctness = "Correct!"
+    } else {
+        correctness = "Incorrect";
+        loseTime = true;
+    };
+    //display last answer and correctness
+    var lastAnswerEL = $('<h3>');
+    lastAnswerEL.text('Your last answer was: ' + clicked);
+    var correctEL = $('<h2>');
+    correctEL.text(correctness);
+    answerAreaEl.text('');
+    answerAreaEl.append(lastAnswerEL, correctEL);
+    //check if there are more questions
+    questionNumber++;
+    if (questionNumber >= questionObjects.length) {
+        stopTime = true;
+    } else {
+        askQuestion(questionNumber);
+    };
 };
 
 //function for game ended
 function gameOver() {
-    console.log('Game Over');
-}
+    //clear quiz area
+    quizAreaEl.text('');
+    //print game over in quiz area
+    var thatsAll = $('<h2>');
+    thatsAll.text('Game Over');
+    quizAreaEl.append(thatsAll);
+    //alert to enter initails for score
+    var initails = prompt("Enter your initails:");
+
+};
 
 
 // console.log(scoreArray);

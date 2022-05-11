@@ -3,29 +3,30 @@
 >>create/check for a local storage stringified array of 10 high scores and initials
 
 >>display high scores in q/a div
->create start button in correct/incorrect div
-    >when button is pressed 
+>>create start button in correct/incorrect div
+    >>when button is pressed 
         >>start button is hidden
         >>a timer starts
             >>timer runs out = ends game
         >>i am presented with the first question from the array
             >>call function to display answers
-        i am presented with 4 multiple choice answers from the objects 
-            the answers are arranged in random order
+        >>i am presented with 4 multiple choice answers from the objects 
+            >>the answers are arranged in random order
 
-when i click an answer
-    check for right answer
-        if i answer correct
-            score increases
-            new score is diplayed
-        "correct" is displayed
-        next question is presented
-    if i answer wrong
-        time is subtracted from clock
-        "wrong" is displayed
-        next question is presented
-    if it is the last question
-        ends game
+>when i click an answer
+    >check for right answer
+        >>if i answer correct
+            >>score increases
+            >>new score is diplayed
+            >>"correct" is displayed
+            >>next question is presented
+        >>if i answer wrong
+            >>time is subtracted from clock
+            >>"wrong" is displayed
+            >>next question is presented
+        >>if it is the last question
+            >>ends game
+        >>if it is not the last question it asks the next
 
 if all questions are answered or the timer reaches 0
     timer stops
@@ -48,6 +49,7 @@ if all questions are answered or the timer reaches 0
 
 if "play again" is clicked
     clear variable
+        score
     run same function that start button calls
 
       
