@@ -1,5 +1,6 @@
 //define global variables_____________________________________
 var timeLeft = 10;
+var questionNumber = 0;
 var quizAreaEl = $('.quiz-area');
 var timerEl = $('#timer');
 var scoreEl = $('#score');
@@ -104,8 +105,7 @@ function startButtonClick(event) {
 //function for starting game
 function startGame() {
     startTimer();
-    askQuestion();
-    displayOptions();
+    askQuestion(0);
 };
 
 // function to start timer
@@ -119,13 +119,24 @@ function startTimer() {
         if(timeLeft === 0) {
             clearInterval(timerInterval);
             gameOver();
-            };
+        };
     }, 1000);
 };
 
 //function to present question
-function askQuestion() {
-    console.log('question asked');
+function askQuestion(localValue) {
+    //clear quiz area
+    quizAreaEl.text('');
+    //get new question
+    var currentQuestion = questionObjects[localValue];
+    localValue++;
+    var questionContent = currentQuestion['question'];
+    var questionEl = $('<h3>');
+    questionEl.text('Question ' + localValue + ': ' + questionContent);
+    //display new question
+    quizAreaEl.append(questionEl);
+    //call function to display options
+    displayOptions();
 };
 
 //function to present answers

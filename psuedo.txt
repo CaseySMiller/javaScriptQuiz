@@ -1,13 +1,17 @@
-create array of objects with question/answer pair properties and 3 more wrong answers
+>>create array of objects with question/answer pair properties and 3 more wrong answers
 
-create/check for a local storage stringified array of 10 high scores and initials
+>>create/check for a local storage stringified array of 10 high scores and initials
 
-create start button in Q/A div
-    when button is pressed 
-        start button is hidden
-        a timer starts
-        i am presented with a question reamdonly selected from the array
-        i am presented with 4 mulri choice answers from the objects
+>>display high scores in q/a div
+>create start button in correct/incorrect div
+    >when button is pressed 
+        >>start button is hidden
+        >>a timer starts
+            >>timer runs out = ends game
+        >>i am presented with the first question from the array
+            >>call function to display answers
+        i am presented with 4 multiple choice answers from the objects 
+            the answers are arranged in random order
 
 when i click an answer
     check for right answer
@@ -20,6 +24,8 @@ when i click an answer
         time is subtracted from clock
         "wrong" is displayed
         next question is presented
+    if it is the last question
+        ends game
 
 if all questions are answered or the timer reaches 0
     timer stops
@@ -33,12 +39,12 @@ if all questions are answered or the timer reaches 0
             else
                 save initials and score to local storage
                     save index position [0]
-        display list of top ten scores from memory
+        display list of top ten scores from memory in q/a div
             if new score is in top 10 
                 display in position with "your score" appended
             else
                 display below 10th place with "your score" appended
-        display "play again?" button
+        display "play again?" button in correct/incorrect div
 
 if "play again" is clicked
     clear variable

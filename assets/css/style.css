@@ -1,12 +1,17 @@
 . {
     box-sizing: border-box;
+    font-size: 62.5%;
+}
+
+:root {
+    --red: rgb(143, 10, 10);
 }
 
 body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: rgb(143, 10, 10);
+    background-color: var(--red);
     color: white;
 }
 
@@ -37,8 +42,6 @@ footer{
     flex-direction: column;
     flex-grow: 2;
     background-color: white;
-    /* width: 60%;
-    height: 300px; */
 }
 
 .score-and-timer {
@@ -49,8 +52,6 @@ footer{
     align-items: center;
     flex-grow: 1;
     background-color: white;
-    /* width: 30%;
-    height: 500px; */
 }
 
 .answer-display {
@@ -59,4 +60,10 @@ footer{
     margin: 15px;
     padding: 10px;
     background-color: white;
+}
+
+#timer {
+    display: flex;
+    font-size: 3rem;
+    color: var(--red);
 }
