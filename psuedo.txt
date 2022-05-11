@@ -1,0 +1,47 @@
+create array of objects with question/answer pair properties and 3 more wrong answers
+
+create/check for a local storage stringified array of 10 high scores and initials
+
+create start button in Q/A div
+    when button is pressed 
+        start button is hidden
+        a timer starts
+        i am presented with a question reamdonly selected from the array
+        i am presented with 4 mulri choice answers from the objects
+
+when i click an answer
+    check for right answer
+        if i answer correct
+            score increases
+            new score is diplayed
+        "correct" is displayed
+        next question is presented
+    if i answer wrong
+        time is subtracted from clock
+        "wrong" is displayed
+        next question is presented
+
+if all questions are answered or the timer reaches 0
+    timer stops
+    "game over" displayed
+    prompt for initials
+        check for localStorage array of scores
+            if it exists then parse it to array
+                add score if it is the top 10
+                    save index position
+                stringify it back to local storage
+            else
+                save initials and score to local storage
+                    save index position [0]
+        display list of top ten scores from memory
+            if new score is in top 10 
+                display in position with "your score" appended
+            else
+                display below 10th place with "your score" appended
+        display "play again?" button
+
+if "play again" is clicked
+    clear variable
+    run same function that start button calls
+
+      
