@@ -5,11 +5,11 @@ var questionNumber = 0;
 var score = 0;
 var yourName = "";
 var loseTime = false;
-var timePenalty = 2;
-var quizAreaEl = $('.quiz-area');
+var timePenalty = 10;
+var quizAreaEl = $('#quiz-area');
 var timerEl = $('#timer');
 var scoreEl = $('#score');
-var answerAreaEl = $('.answer-display');
+var answerAreaEl = $('#answer-display');
 var startButtonEL = $('#start-button');
 //define array of q and a objects
 var questionObjects = [
@@ -19,7 +19,7 @@ var questionObjects = [
         'answer': 'Both',
         'wrongAnswer1': 'Client',
         'wrongAnswer2': 'Server',
-        'wrongAnswer3': 'Both'
+        'wrongAnswer3': 'None of these'
     },
     // question2 
     {
@@ -166,19 +166,22 @@ startButtonEL.on('click', startButtonClick);
 //function to display high scores
 function displayHighScores() {
     //write score title to quiz area
-    var scoreTitleEL = $('<h2>');
+    var scoreTitleEL = $('<div>');
+    scoreTitleEL.addClass('card-header')
     scoreTitleEL.text('High Scores');
     quizAreaEl.append(scoreTitleEL);
     //make ordered list in quiz area and populate it from scoreArray 
-    var scoreListEl = $('<ol>');
-    scoreListEl.attr('type', '1');
+    var scoreListEl = $('<div>');
+    scoreListEl.addClass('card-body')
+    scoreListEl.append($('<ol>'));
+    scoreListEl.children('ol').attr('type', '1');
     quizAreaEl.append(scoreListEl);
     for (var i = 0; i < scoreArray.length; i++) {
         var initials = scoreArray[i].initials;
         var oldScore = scoreArray[i].score;
         var scoreEl = $('<li>');
         scoreEl.text(initials + " - " + oldScore);
-        quizAreaEl.children('ol').append(scoreEl);
+        scoreListEl.children('ol').append(scoreEl);
     };
 };
 
@@ -224,7 +227,8 @@ function askQuestion(localValue) {
     var currentQuestion = questionObjects[localValue];
     localValue++;
     var questionContent = currentQuestion['question'];
-    var questionEl = $('<h3>');
+    var questionEl = $('<div>');
+    questionEl.addClass('card-header');
     questionEl.text('Question ' + localValue + ': ' + questionContent);
     //display new question
     quizAreaEl.append(questionEl);
@@ -248,11 +252,16 @@ function displayOptions(localValue) {
     ];
     //randomize array
     allAnswers = allAnswers.sort( ()=>Math.random()-0.5 );
+    //add new card body div
+    var cardBody = $('<div>');
+    cardBody.addClass('card-body text-center');
+    quizAreaEl.append(cardBody);
     //display all answers as buttons
     for (i = 0; i < allAnswers.length; i++) {
         var answerEl = $('<button>');
+        answerEl.addClass('btn btn-success m-3 col-10 col-md-5');
         answerEl.text(allAnswers[i]);
-        quizAreaEl.append(answerEl);
+        cardBody.append(answerEl);
     }
     // call function to check answer on click
     $('button').click(function() {
@@ -293,11 +302,7 @@ function checkAnswer(correct, clicked) {
 function gameOver() {
     //clear quiz area
     quizAreaEl.text('');
-    //print game over in quiz area
-    var thatsAll = $('<h2>');
-    thatsAll.text('Game Over');
-    quizAreaEl.append(thatsAll);
-    //call function to retreive initials
+    // //call function to retreive initials
     checkInitials();
     //creat score object
     var newScoreObject = {
@@ -324,7 +329,7 @@ function gameOver() {
     if (!madeList) {
         var scoreEl = $('<li>');
         scoreEl.text(yourName + " - " + score);
-        quizAreaEl.children('ol').append(scoreEl);
+        quizAreaEl.children('div').children('ol').append(scoreEl);
     };
     playAgainButton();
 };
@@ -342,6 +347,7 @@ function checkInitials() {
 function playAgainButton() {
     var playAgainEL = $('<button>');
     playAgainEL.attr('id', 'start-button');
+    playAgainEL.addClass('btn btn-lg btn-success');
     playAgainEL.text('Play Again?');
     answerAreaEl.text('');
     answerAreaEl.append(playAgainEL); 

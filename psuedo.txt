@@ -28,28 +28,25 @@
             >>ends game
         >>if it is not the last question it asks the next
 
-if all questions are answered or the timer reaches 0
-    timer stops
-    "game over" displayed
-    prompt for initials
-        check for localStorage array of scores
-            if it exists then parse it to array
-                add score if it is the top 10
-                    save index position
-                stringify it back to local storage
-            else
-                save initials and score to local storage
-                    save index position [0]
-        display list of top ten scores from memory in q/a div
-            if new score is in top 10 
-                display in position with "your score" appended
-            else
-                display below 10th place with "your score" appended
-        display "play again?" button in correct/incorrect div
+>if all questions are answered or the timer reaches 0
+    >>timer stops
+    >>"game over" displayed
+    >prompt for initials
+        >>check for localStorage array of scores
+            >>if it exists then parse it to array
+                >>add score if it is the top 10
+                >>stringify it back to local storage
+            >>else
+                >>save initials and score to local storage
+        >>display list of top ten scores from memory in q/a div
+            >>if new score is in top 10 
+                >>display in position
+            >>else
+                >>display below 10th place
+        >>display "play again?" button in correct/incorrect div
 
-if "play again" is clicked
-    clear variable
-        score
-    run same function that start button calls
+>>if "play again" is clicked
+    >>clear variable
+    >>run same function that start button calls
 
       
