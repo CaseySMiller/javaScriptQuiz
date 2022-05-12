@@ -1,5 +1,5 @@
 //define global variables_____________________________________
-var timeLeft = 60;
+var timeLeft = 180;
 var stopTime = false;
 var questionNumber = 0;
 var score = 0;
@@ -15,35 +15,83 @@ var startButtonEL = $('#start-button');
 var questionObjects = [
     // question1 
     {
-        'question': 'what is 1',
-        'answer': '1',
-        'wrongAnswer1': 'a',
-        'wrongAnswer2': 'b',
-        'wrongAnswer3': 'c'
+        'question': 'JavaScript is a ___ -side programming language.',
+        'answer': 'Both',
+        'wrongAnswer1': 'Client',
+        'wrongAnswer2': 'Server',
+        'wrongAnswer3': 'Both'
     },
     // question2 
     {
-        'question': 'what is 2',
-        'answer': '2',
-        'wrongAnswer1': 'a',
-        'wrongAnswer2': 'b',
-        'wrongAnswer3': 'c'
+        'question': 'Which of the following will write the message “Hello World!” in an alert box?',
+        'answer': 'alert(“Hello World!”);',
+        'wrongAnswer1': 'msgAlert(“Hello World!”);',
+        'wrongAnswer2': 'alert(Hello World!);',
+        'wrongAnswer3': 'alertBox(“Hello World!”);'
     },
     // question3 
     {
-        'question': 'what is 3',
-        'answer': '3',
-        'wrongAnswer1': 'a',
-        'wrongAnswer2': 'b',
-        'wrongAnswer3': 'c',
+        'question': 'How do you find the minimum of x and y using JavaScript?',
+        'answer': 'Math.min(x,y)',
+        'wrongAnswer1': 'min(x,y);',
+        'wrongAnswer2': 'Math.min(xy)',
+        'wrongAnswer3': 'min(xy);',
     },
     // question4 
     {
-        'question': 'what is 4',
-        'answer': '4',
-        'wrongAnswer1': 'a',
-        'wrongAnswer2': 'b',
-        'wrongAnswer3': 'c'
+        'question': 'If the value of x is 40, then what is the output of the following program? (x % 10 == 0)? console.log(“Divisible by 10”) : console.log(“Not divisible by 10”);',
+        'answer': 'Divisible by 10',
+        'wrongAnswer1': 'ReferenceError',
+        'wrongAnswer2': 'Not divisible by 10',
+        'wrongAnswer3': 'None of the above'
+    },
+    //question5
+    {
+        'question': 'Which JavaScript label catches all the values, except for the ones specified?',
+        'answer': 'default',
+        'wrongAnswer1': 'try',
+        'wrongAnswer2': 'label',
+        'wrongAnswer3': 'catch'
+    },
+    //question6
+    {
+        'question': 'Which are the correct “if” statements to execute certain code if “x” is equal to 2?',
+        'answer': 'if(x == 2)',
+        'wrongAnswer1': 'if(x != 2 )',
+        'wrongAnswer2': 'if(x = 2)',
+        'wrongAnswer3': 'if(x 2)'
+    },
+    //question7
+    {
+        'question': 'What will the code return? Boolean(3 < 7)',
+        'answer': 'true',
+        'wrongAnswer1': 'false',
+        'wrongAnswer2': 'SyntaxError',
+        'wrongAnswer3': 'NaN'
+    },
+    //question8
+    {
+        'question': 'Which is the correct way to write a comment in JavaScript?',
+        'answer': '// ....',
+        'wrongAnswer1': '{# ... #}',
+        'wrongAnswer2': '<!--- .... ---!>',
+        'wrongAnswer3': '\\ ...'
+    },
+    //question9
+    {
+        'question': 'Is it necessary for the external JavaScript script file to contain a <script> tag?',
+        'answer': 'no',
+        'wrongAnswer1': 'yes',
+        'wrongAnswer2': 'depends on the type of include',
+        'wrongAnswer3': 'none of these'
+    },
+    //question10
+    {
+        'question': 'Which of the following function of Array object applies a function simultaneously against two values of the array (from left-to-right) as to reduce it to a single value?',
+        'answer': 'reduce()',
+        'wrongAnswer1': 'reduceRight()',
+        'wrongAnswer2': 'push()',
+        'wrongAnswer3': 'pop()'
     }
 ];
 
@@ -149,7 +197,7 @@ function startGame() {
 
 // function to start timer
 function startTimer() {
-    timeLeft = 60;
+    timeLeft = 180;
     var timerInterval = setInterval(function() {
         timeLeft--;
         //subtract time for wrong answer
@@ -304,7 +352,7 @@ function playAgainButton() {
 function playAgainClick(event) {
     event.preventDefault();
     //reset variables
-    timeLeft = 60;
+    timeLeft = 180;
     stopTime = false;
     questionNumber = 0;
     score = 0;
