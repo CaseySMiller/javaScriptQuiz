@@ -67,3 +67,11 @@ footer{
     font-size: 3rem;
     color: var(--red);
 }
+
+#score {
+    display: flex;
+    font-size: 3rem;
+    color: var(--red);
+}
+
+

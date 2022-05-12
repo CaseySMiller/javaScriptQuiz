@@ -3,6 +3,7 @@ var timeLeft = 60;
 var stopTime = false;
 var questionNumber = 0;
 var score = 0;
+var yourName = "";
 var loseTime = false;
 var timePenalty = 2;
 var quizAreaEl = $('.quiz-area');
@@ -56,16 +57,46 @@ var scoreArray = JSON.parse(localStorage.getItem("highScores"));
 //check if array is empty and populate it with "empty" if it isnt
 if (!scoreArray) {
     scoreArray = [
-        'Empty',
-        'Empty',
-        'Empty',
-        'Empty',
-        'Empty',
-        'Empty',
-        'Empty',
-        'Empty',
-        'Empty',
-        'Empty',
+        {
+            'initials': 'Empty',
+            'score': 0, 
+        },
+        {
+            'initials': 'Empty',
+            'score': 0, 
+        },
+        {
+            'initials': 'Empty',
+            'score': 0, 
+        },
+        {
+            'initials': 'Empty',
+            'score': 0, 
+        },
+        {
+            'initials': 'Empty',
+            'score': 0, 
+        },
+        {
+            'initials': 'Empty',
+            'score': 0, 
+        },
+        {
+            'initials': 'Empty',
+            'score': 0, 
+        },
+        {
+            'initials': 'Empty',
+            'score': 0, 
+        },
+        {
+            'initials': 'Empty',
+            'score': 0, 
+        },
+        {
+            'initials': 'Empty',
+            'score': 0, 
+        }
     ];
     //push to local storage
     localStorage.setItem("highScores", JSON.stringify(scoreArray));
@@ -95,8 +126,10 @@ function displayHighScores() {
     scoreListEl.attr('type', '1');
     quizAreaEl.append(scoreListEl);
     for (var i = 0; i < scoreArray.length; i++) {
+        var initials = scoreArray[i].initials;
+        var oldScore = scoreArray[i].score;
         var scoreEl = $('<li>');
-        scoreEl.text(scoreArray[i]);
+        scoreEl.text(initials + " - " + oldScore);
         quizAreaEl.children('ol').append(scoreEl);
     };
 };
@@ -119,13 +152,14 @@ function startTimer() {
     timeLeft = 60;
     var timerInterval = setInterval(function() {
         timeLeft--;
-        timerEl.text(timeLeft);
-
         //subtract time for wrong answer
         if (loseTime === true) {
             timeLeft = timeLeft - timePenalty;
             loseTime = false;
         }
+        //update timer in window
+        timerEl.text(timeLeft);
+
         //stop game if timer stops or runs out
         if(timeLeft <= 0 || stopTime) {
             clearInterval(timerInterval);
@@ -215,11 +249,72 @@ function gameOver() {
     var thatsAll = $('<h2>');
     thatsAll.text('Game Over');
     quizAreaEl.append(thatsAll);
-    //alert to enter initails for score
-    var initails = prompt("Enter your initails:");
-
+    //call function to retreive initials
+    checkInitials();
+    //creat score object
+    var newScoreObject = {
+        "initials": yourName,
+        "score": score
+    };
+    //check score against high scores and add to array if top 10
+    for (i = 0; i < scoreArray.length; i++) {
+        var madeList = false;
+        var oldScore = scoreArray[i].score;
+        var initails = scoreArray[i].initials;
+        if (oldScore <= score) {
+            scoreArray.splice(i, 0, newScoreObject);
+            scoreArray.splice(10, 1);
+            madeList = true;
+            break;
+        };
+    };
+    //write new high scores to local memory
+    localStorage.setItem("highScores", JSON.stringify(scoreArray));
+    //display high scroes
+    displayHighScores();
+    //append score to end if didnt make top 10
+    if (!madeList) {
+        var scoreEl = $('<li>');
+        scoreEl.text(yourName + " - " + score);
+        quizAreaEl.children('ol').append(scoreEl);
+    };
+    playAgainButton();
 };
 
+function checkInitials() {
+    //alert to enter initails for score
+    yourName = prompt("Enter your initials:");
+    if (yourName.length !== 3) {
+        alert('Initials must be 3 characters');
+        checkInitials();
+    };
+    yourName = yourName.toUpperCase();
+};
 
-// console.log(scoreArray);
+function playAgainButton() {
+    var playAgainEL = $('<button>');
+    playAgainEL.attr('id', 'start-button');
+    playAgainEL.text('Play Again?');
+    answerAreaEl.text('');
+    answerAreaEl.append(playAgainEL); 
+    //set behavior for button click
+    playAgainEL.on('click', playAgainClick);
+};
+
+function playAgainClick(event) {
+    event.preventDefault();
+    //reset variables
+    timeLeft = 60;
+    stopTime = false;
+    questionNumber = 0;
+    score = 0;
+    yourName = "";
+    loseTime = false;
+    //hide button
+    startButtonEL = $('#start-button');
+    startButtonEL.hide();
+    //start game
+    startGame();
+};
+
 
